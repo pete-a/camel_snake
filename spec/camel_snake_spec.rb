@@ -9,7 +9,10 @@ describe CamelSnake do
     let(:original_hash){{
       firstName: 'Test',
       'lastName' => 'User',
-      'multipleCamelCases' => 'test'
+      'multipleCamelCases' => 'test',
+      'aKey' => {
+        'nestedKey' => 'nested key value'
+      }
     }}
 
     let(:output) {
@@ -21,7 +24,10 @@ describe CamelSnake do
       expect(output[:first_name]).to eq 'Test'
     end
 
-
+    it 'traverses the hash tree' do
+      expect(output['a_key']).to have_key 'nested_key'
+      expect(output['a_key']['nested_key']).to eq 'nested key value'
+    end
   end
 
 end
